@@ -1,38 +1,38 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import *
+from django.http import *
+from .models import *
 
 # Create your views here.
 
 def to_index(request):
-    return HttpResponseRedirect('index')
+    return redirect('index')
 
 def index(request):
-    response = render(request, 'index.html')
+    response = render_to_response('index.html')
     return response
 
 def example(request, current):
     context = {}
     context['current'] = current
-    context['next'] = 'example' + str(current + 1)
-    response = render(request, 'example.html', context)
+    response = render_to_response('example.html', context)
     return response
 
 def quiz(request):
-    response = render(request, 'quiz.html')
+    response = render_to_response('quiz.html')
     return response
 
 def entry(request):
-    response = render(request, 'entry.html')
+    response = render_to_response('entry.html')
     return response
 
 def task(request):
-    response = render(request, 'task.html')
+    response = render_to_response('task.html')
     return response
 
 def sorry(request):
-    response = render(request, 'sorry.html')
+    response = render_to_response('sorry.html')
     return response
 
 def thanks(request):
-    response = render(request, 'thanks.html')
+    response = render_to_response('thanks.html')
     return response

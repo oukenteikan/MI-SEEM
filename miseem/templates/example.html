@@ -10,7 +10,7 @@
     <text>Waiting to be filled!</text>
         <hr>
     {% if current != 3 %}
-        <a href={{ next }}>
+    <a href={% url 'example' current|add:1 %}>
             <button>Understand and next!</button>
         </a>
     {% else %}
