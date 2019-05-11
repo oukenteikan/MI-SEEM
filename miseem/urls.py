@@ -20,7 +20,7 @@ from . import views
 urlpatterns = [
     # /miseem/
     path('', views.to_index, name='to_index'),
-    path('index', views.index, name='index'),
+    path('index.html', views.index, name='index'),
     path('example<int:current>', views.example, name='example'),
     path('quiz', views.quiz, name='quiz'),
     path('entry', views.entry, name='entry'),

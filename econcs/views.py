@@ -1,10 +1,12 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import *
+from django.http import *
 
 # Create your views here.
 
-def to_home(request):
-    return HttpResponseRedirect('index')
+def to_index(request):
+    response = redirect('index')
+    return response
 
-def home(request):
-    return HttpResponse("I'm trying to build an econcs website for our group!")
+def index(request):
+    response = render_to_response('econcs_index.html')
+    return response 
