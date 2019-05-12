@@ -3,13 +3,9 @@ from django.http import *
 
 # Create your views here.
 
-def to_index(request):
-    response = redirect('index')
+def to_home(request):
+    response = redirect('home')
     return response
-
-def index(request):
-    response = render_to_response('econcs_index.html')
-    return response 
 
 def home(request):
     response = render_to_response('home.html')

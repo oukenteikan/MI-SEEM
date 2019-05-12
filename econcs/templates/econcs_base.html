@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+    <div class = "container-fluid">
+        <img src = "{% static "images/test.png" %}" width = "512px" align = "left" />
+    </div>
+    {% block content %}{% endblock %}
+{% endblock body %}
