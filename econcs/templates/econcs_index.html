@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block head %}
     <h1>Here is the favicon!</h1>
+    <img src = "{% static "images/icon.jpg" %}"
 {% endblock head %}
 
 {% block body %}
