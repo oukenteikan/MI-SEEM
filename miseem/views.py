@@ -8,7 +8,7 @@ def to_index(request):
     return redirect('index')
 
 def index(request):
-    response = render_to_response('index.html')
+    response = render_to_response('miseem_index.html')
     return response
 
 def example(request, current):
