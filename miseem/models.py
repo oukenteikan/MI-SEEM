@@ -1,7 +1,17 @@
 from django.db import models
+from django import forms
 from django.contrib.auth.models import User
 
 # Create your models here.
+
+class PointWise(forms.Form):
+    score = forms.FloatField()
+
+class PairWise(forms.Form):
+    score = forms.IntegerField()
+
+class ListWise(forms.Form):
+    score = forms.IntegerField()
 
 class System(models.Model):
     name = models.CharField(max_length = 64)

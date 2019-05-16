@@ -14,6 +14,14 @@ def index(request):
 def example(request, current):
     context = {}
     context['current'] = current
+    if current == 1:
+        context['head'] = "The 1st example!"
+    elif current == 2:
+        context['head'] = "The 2nd example!"
+    elif current == 3:
+        context['head'] = "The 3rd example!"
+    else:
+        raise Http404("The page doesn't exist!")
     response = render_to_response('example.html', context)
     return response
 

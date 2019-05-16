@@ -1,18 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'miseem_base.html' %}
 
-{% block head %}
-    <h1>MI-SEEM</h1>
-{% endblock head %}
+{% block content %}
+    <div>
+        <h3>Here should be a label task!</h3>
+        <text>Waiting to be filled!</text>
+        <text>We need a timer here!</text>
+        <text>If less than a fixed time, we jump to the sample page again!</text>
+        <text>If more than a fixed time, we jump to the last page thanks!</text>
+        <hr>
+    </div>
+{% endblock content %}
 
-{% block body %}
-    <h3>Here should be a label task!</h3>
-        <hr>
-    <text>Waiting to be filled!</text>
-    <text>We need a timer here!</text>
-    <text>If less than a fixed time, we jump to the sample page again!</text>
-    <text>If more than a fixed time, we jump to the last page thanks!</text>
-        <hr>
-    <a href={% url 'thanks' %}>
-        <button>finish and next!</button>
-    </a>
-{% endblock body %}
+{% block button %}
+    <div>
+        <a href={% url 'thanks' %}>
+            <button>finish and next!</button>
+        </a>
+    </div>    
+{% endblock button %}

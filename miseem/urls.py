@@ -24,7 +24,7 @@ urlpatterns = [
     path('example<int:current>', views.example, name='example'),
     path('quiz', views.quiz, name='quiz'),
     path('entry', views.entry, name='entry'),
-    path('task', views.task, name='entry'),
+    path('task', views.task, name='task'),
     path('sorry', views.sorry, name='sorry'),
     path('thanks', views.thanks, name='thanks'),
 ]
