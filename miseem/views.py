@@ -2,6 +2,7 @@ from django.shortcuts import *
 from django.http import *
 from .models import *
 from django.template import *
+from datetime import datetime
 
 # Create your views here.
 
@@ -13,6 +14,8 @@ def index(request):
     return response
 
 def example(request, current):
+    if request.COOKIES.get("visited_example"+str(current)):
+        return render(request, 'sorry.html')
     if request.method == "GET":
         context = {}
         context['current'] = current
@@ -28,7 +31,7 @@ def example(request, current):
         else:
             return render(request, 'sorry.html')
         response = render(request, 'example.html', context)
-        
+    
     elif request.method == "POST":
         if current == 1:
             form = PointWise(request.POST)
@@ -38,14 +41,19 @@ def example(request, current):
             form = ListWise(request.POST)
         else:
             return render(request, 'sorry.html')
-        response = HttpResponse("test!")
+        response = render(request, 'sorry.html')
+        response.set_cookie("visited_example"+str(current), True)
 
     else:
-        raise Http404("The page doesn't exist!")
+        response = render(request, 'sorry.html')
     return response
 
 def quiz(request):
+    if request.COOKIES.get("visited_quiz"):
+        return render(request, 'sorry.html')
     response = render(request, 'quiz.html')
+    if request.method == "POST":
+        response.set_cookie("visited_quiz", True)
     return response
 
 def entry(request):
@@ -53,7 +61,11 @@ def entry(request):
     return response
 
 def task(request):
+    if request.COOKIES.get("visited_task"):
+        return render(request, 'sorry.html')
     response = render_to_response('task.html')
+    if request.method == "POST":
+        response.set_cookie("visited_task", True)
     return response
 
 def sorry(request):
