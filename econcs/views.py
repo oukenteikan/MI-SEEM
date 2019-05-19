@@ -4,7 +4,7 @@ from django.http import *
 # Create your views here.
 
 def to_home(request):
-    response = redirect('home')
+    response = redirect('econcs:home')
     return response
 
 def home(request):

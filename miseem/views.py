@@ -7,10 +7,10 @@ from datetime import datetime
 # Create your views here.
 
 def to_index(request):
-    return redirect('index')
+    return redirect('miseem:index')
 
 def index(request):
-    response = render_to_response('miseem_index.html')
+    response = render(request, 'miseem_index.html')
     return response
 
 def example(request, current):
@@ -57,21 +57,21 @@ def quiz(request):
     return response
 
 def entry(request):
-    response = render_to_response('entry.html')
+    response = render(request, 'entry.html')
     return response
 
 def task(request):
     if request.COOKIES.get("visited_task"):
         return render(request, 'sorry.html')
-    response = render_to_response('task.html')
+    response = render(request, 'task.html')
     if request.method == "POST":
         response.set_cookie("visited_task", True)
     return response
 
 def sorry(request):
-    response = render_to_response('sorry.html')
+    response = render(request, 'sorry.html')
     return response
 
 def thanks(request):
-    response = render_to_response('thanks.html')
+    response = render(request, 'thanks.html')
     return response

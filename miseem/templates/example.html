@@ -14,7 +14,7 @@
 {% endblock content %}
 
 {% block form %}
-    <form action={% url 'example' current %} method="post">
+    <form action={% url 'miseem:example' current %} method="post">
         {% csrf_token %} 
         {{ form }}
         <input type="submit" value="OK">
@@ -23,9 +23,9 @@
 
 {% block url %}
     {% if current != 3 %}
-    {% url 'example' current|add:1 %}
+    {% url 'miseem:example' current|add:1 %}
     {% else %}
-    {% url 'quiz' %}
+    {% url 'miseem:quiz' %}
     {% endif %}
 {% endblock url%}
 {% block button %}Understand and continue!{% endblock button %}

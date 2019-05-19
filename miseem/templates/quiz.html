@@ -15,12 +15,12 @@
 {% endblock content %}
 
 {% block form %}
-    <form action={% url 'quiz' %} method="post">
+    <form action={% url 'miseem:quiz' %} method="post">
         {% csrf_token %} 
         <!-- -->
         <input type="submit" value="OK">
     </form>
 {% endblock form %}
 
-{% block url %}{% url 'entry' %}{% endblock url%}
+{% block url %}{% url 'miseem:entry' %}{% endblock url%}
 {% block button %}Finish and continue!{% endblock button %}

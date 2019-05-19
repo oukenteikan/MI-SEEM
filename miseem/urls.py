@@ -17,6 +17,7 @@ Including another URLconf
 from django.urls import path
 from . import views
 
+app_name = "miseem"
 urlpatterns = [
     # /miseem/
     path('', views.to_index, name='to_index'),
