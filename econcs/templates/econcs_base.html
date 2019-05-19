@@ -3,8 +3,35 @@
 {% load static %}
 
 {% block body %}
-    <div class = "container-fluid">
-        <img src = "{% static "images/test.png" %}" width = "512px" align = "left" />
+    <div class = "container-fluid" align="center">
+        <a href={% url 'home' %}>
+            <img alt = "Logo" src = {% static "images/head_logo.png" %} width = "512px">
+        </a> 
     </div>
-    {% block content %}{% endblock %}
+    <nav class="navbar navbar-default">
+        <div class="container row col-md-8 col-md-offset-2">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href = {% url 'home' %}>
+                    <img alt="Icon" src={% static "images/head_icon.jpg" %} width = "32px" height = "24px">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse" style="padding-top: 5px;">
+                <ul class="nav nav-pills">
+                    <li role="presentation" class="{% block nav_home_active %}{% endblock nav_home_active %}"><a href={% url 'home' %}>Home</a></li>
+                    <li role="presentation" class="{% block nav_people_active %}{% endblock nav_people_active %}"><a href={% url 'people' %}>People</a></li>
+                    <li role="presentation" class="{% block nav_publication_active %}{% endblock nav_publication_active %}"><a href={% url 'publication' %}>Publication</a></li>.
+                    <li role="presentation" class="{% block nav_teaching_active %}{% endblock nav_teaching_active %}"><a href={% url 'teaching' %}>Teaching</a></li>
+                    <li role="presentation" class="{% block nav_seminar_active %}{% endblock nav_seminar_active %}"><a href={% url 'seminar' %}>Seminar</a></li>
+                    <li role="presentation" class="{% block nav_news_active %}{% endblock nav_news_active %}"><a href={% url 'news' %}>News</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block content %}{% endblock content %}
 {% endblock body %}

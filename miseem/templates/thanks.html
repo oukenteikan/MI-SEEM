@@ -1,17 +1,17 @@
 {% extends 'miseem_base.html' %}
 
 {% block content %}
-    <div>
-        <h3>Well done!</h3>
-        <text>Thank you so much for your participation!</text>
-        <hr>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Well done
+            </h3>
+        </div>
+        <div class="panel-body">
+            Thanks for your participation!
+        </div>
     </div>
 {% endblock content %}
 
-{% block button %}
-    <div>
-        <a href={% url 'index' %}>
-            <button>quit and return!</button>
-        </a>
-    </div>    
-{% endblock button %}
+{% block url %}{% url 'index' %}{% endblock url%}
+{% block button %}Quit and return!{% endblock button %}

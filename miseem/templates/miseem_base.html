@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
 
 {% block body %}
-
-    <div>
-        <h1>MI-SEEM</h1>
-        <hr>
+    <div class="page-header">
+        <h1 align = "center">MI-SEEM</h1>
     </div>
 
-    {% block content %}{% endblock content %}
-
-    {% block form %}{% endblock form %}
-
-    {% block button %}{% endblock button %}
+    <div class="container-fluid">
+        <div class="row col-md-8 col-md-offset-2">
+            {% block content %}{% endblock content %}
+        </div>
+        <div class="row col-md-8 col-md-offset-2">
+            {% block form %}{% endblock form %}
+        </div>
+        <div class="row col-md-8 col-md-offset-2">
+            <a href={% block url %}{% endblock url %}>
+            <button type="button" class="btn btn-default">{% block button %}{% endblock button %}</button>
+            </a>
+        </div>
+    </div>
 
 {% endblock body %}

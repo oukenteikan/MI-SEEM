@@ -1,6 +1,7 @@
 from django.shortcuts import *
 from django.http import *
 from .models import *
+from django.template import *
 
 # Create your views here.
 
@@ -12,21 +13,39 @@ def index(request):
     return response
 
 def example(request, current):
-    context = {}
-    context['current'] = current
-    if current == 1:
-        context['head'] = "The 1st example!"
-    elif current == 2:
-        context['head'] = "The 2nd example!"
-    elif current == 3:
-        context['head'] = "The 3rd example!"
+    if request.method == "GET":
+        context = {}
+        context['current'] = current
+        if current == 1:
+            context['head'] = "The 1st example!"
+            context['form'] = PointWise()
+        elif current == 2:
+            context['head'] = "The 2nd example!"
+            context['form'] = PairWise()
+        elif current == 3:
+            context['head'] = "The 3rd example!"
+            context['form'] = ListWise()
+        else:
+            return render(request, 'sorry.html')
+        response = render(request, 'example.html', context)
+        
+    elif request.method == "POST":
+        if current == 1:
+            form = PointWise(request.POST)
+        elif current == 2:
+            form = PairWise(request.POST)
+        elif current == 3:
+            form = ListWise(request.POST)
+        else:
+            return render(request, 'sorry.html')
+        response = HttpResponse("test!")
+
     else:
         raise Http404("The page doesn't exist!")
-    response = render_to_response('example.html', context)
     return response
 
 def quiz(request):
-    response = render_to_response('quiz.html')
+    response = render(request, 'quiz.html')
     return response
 
 def entry(request):

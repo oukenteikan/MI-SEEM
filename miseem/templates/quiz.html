@@ -1,17 +1,26 @@
 {% extends 'miseem_base.html' %}
 
 {% block content %}
-    <div>
-        <h3>Quiz!</h3>
-        <text>Here should be some questions!</text>
-        <hr>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Quiz
+            </h3>
+        </div>
+        <div class="panel-body">
+            Here should be some questions!
+        </div>
     </div>
+ 
 {% endblock content %}
 
-{% block button %}
-    <div>
-        <a href={% url 'entry' %}>
-            <button>finish and continue!</button>
-        </a>
-    </div>    
-{% endblock button %}
+{% block form %}
+    <form action={% url 'quiz' %} method="post">
+        {% csrf_token %} 
+        <!-- -->
+        <input type="submit" value="OK">
+    </form>
+{% endblock form %}
+
+{% block url %}{% url 'entry' %}{% endblock url%}
+{% block button %}Finish and continue!{% endblock button %}

@@ -1,27 +1,31 @@
 {% extends 'miseem_base.html' %}
 
 {% block content %}
-    <div>
-        <h3>{{ head }}</h3>
-        <text>Waiting to be filled!</text>
-        <hr>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                {{ head }}
+            </h3>
+        </div>
+        <div class="panel-body">
+            Waiting to be filled!
+        </div>
     </div>
 {% endblock content %}
 
 {% block form %}
-    
+    <form action={% url 'example' current %} method="post">
+        {% csrf_token %} 
+        {{ form }}
+        <input type="submit" value="OK">
+    </form>
 {% endblock form %}
 
-{% block button %}
-    <div>
-        {% if current != 3 %}
-        <a href={% url 'example' current|add:1 %}>
-                <button>Understand and next!</button>
-            </a>
-        {% else %}
-            <a href={% url 'quiz' %}>
-                <button>Understand and next!</button>
-            </a>       
-        {% endif %}
-    </div>
-{% endblock button %}
+{% block url %}
+    {% if current != 3 %}
+    {% url 'example' current|add:1 %}
+    {% else %}
+    {% url 'quiz' %}
+    {% endif %}
+{% endblock url%}
+{% block button %}Understand and continue!{% endblock button %}

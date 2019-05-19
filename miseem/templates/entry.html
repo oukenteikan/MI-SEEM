@@ -1,17 +1,17 @@
 {% extends 'miseem_base.html' %}
 
 {% block content %}
-    <div>
-        <h3>Entry!</h3>
-        <text>We randomly choose one kind of three, click below button to start!</text>
-        <hr>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Entry
+            </h3>
+        </div>
+        <div class="panel-body">
+            We randomly choose one kind of three, click below button to start!
+        </div>
     </div>
 {% endblock content %}
 
-{% block button %}
-    <div>
-        <a href={% url 'task' %}>
-            <button>ready and start!</button>
-        </a>
-    </div>    
-{% endblock button %}
+{% block url %}{% url 'task' %}{% endblock url%}
+{% block button %}Ready and start!{% endblock button %}

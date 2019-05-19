@@ -1,14 +1,7 @@
 {% extends 'econcs_base.html' %}
 
+{% block nav_teaching_active %}active{% endblock nav_teaching_active %}
+
 {% block content %}
-    <nav class="navbar navbar-default">
-        <ul class="nav nav-tabs">
-            <li role="presentation"><a href={% url 'home' %}>Home</a></li>
-            <li role="presentation"><a href={% url 'people' %}>People</a></li>
-            <li role="presentation"><a href={% url 'publication' %}>Publication</a></li>.
-            <li role="presentation" class="active"><a href={% url 'teaching' %}>Teaching</a></li>
-            <li role="presentation"><a href={% url 'seminar' %}>Seminar</a></li>
-            <li role="presentation"><a href={% url 'news' %}>News</a></li>
-        </ul>
-    </nav>
-{% endblock %}
+
+{% endblock content %}
