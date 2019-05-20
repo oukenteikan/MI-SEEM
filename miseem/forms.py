@@ -74,3 +74,9 @@ class ListWise(forms.Form):
                 (6, 'The third is the best and the second is the worst.')),
         widget=RadioSelect
     )
+
+class Quiz(Form):
+    score = ChoiceField(
+        choices=((1, 'The first is better.'), (-1, 'The second is better.'), (0, 'I think it is a tie.')),
+        widget=RadioSelect
+    )
