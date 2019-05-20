@@ -1,41 +1,31 @@
 from django.db import models
-from django import forms
 from django.contrib.auth.models import User
 
 # Create your models here.
 
-class PointWise(forms.Form):
-    score = forms.FloatField()
-
-class PairWise(forms.Form):
-    score = forms.IntegerField()
-
-class ListWise(forms.Form):
-    score = forms.IntegerField()
-
 class System(models.Model):
     name = models.CharField(max_length = 64)
-    frequence = models.IntegerField()
+    frequence = models.IntegerField(default = 0)
 
     def __str__(self):
-        return "<Name: >" % self.name
+        return self.name
 
 class Question(models.Model):
     description = models.TextField()
     standard = models.TextField()
-    frequence = models.IntegerField()
+    frequence = models.IntegerField(default = 0)
 
     def __str__(self):
-        return "<Description: >\n<Standard: >" % (self.description, self.standard)
+        return "<Description: {}>\n<Standard: {}>".format(self.description, self.standard)
 
 class Sentence(models.Model):
     belong_to_system = models.ForeignKey('System', on_delete = models.CASCADE)
     belong_to_question = models.ForeignKey('Question', on_delete = models.CASCADE)
     content = models.TextField()
-    frequence = models.IntegerField()
+    frequence = models.IntegerField(default = 0)
 
     def __str__(self):
-        return "<Content: >" % self.content
+        return "<Content: %s>" % self.content
 
 class Answer(models.Model):
     belong_to_question = models.ForeignKey('Question', on_delete = models.CASCADE)
@@ -47,15 +37,15 @@ class Answer(models.Model):
     third = models.ForeignKey('Sentence', related_name = 'third_sentence', on_delete = models.CASCADE, blank = True, null = True)
     absolute_score = models.IntegerField(choices = set((i, str(i/10)) for i in range(1, 101)))
     relative_score = models.IntegerField(choices = ((1, 'Win'), (0, 'Tie'), (-1, 'Lose')))
-    rank_score = models.IntegerField(choices = ((1, '123'), (2, '132'), (3, '213'), (4, '231'), (5, '312'), (6, '321')))
+    rank_score = models.IntegerField(choices = ((1, '132'), (2, '123'), (3, '231'), (4, '213'), (5, '321'), (6, '312')))
 
     def __str__(self):
         if belong_to_type == 1:
-            return "<Sentence: >\n<Score: >" % (self.first, self.absolute_score)
+            return "<Sentence: {}>\n<Score: {}>" % (self.first, self.absolute_score)
         elif belong_to_type == 2:
-            return "<Sentence1: >\n<Sentence2: >\n<Score: >" % (self.first, self.second, self.relative_score)
+            return "<Sentence1: {}>\n<Sentence2: {}>\n<Score: {}>" % (self.first, self.second, self.relative_score)
         elif belong_to_type == 3:
-            return "<Sentence1: >\n<Sentence2: >\n<Sentence3: >\n<Score: >" % (self.first, self.second, self.thrid, self.rank_score)
+            return "<Sentence1: {}>\n<Sentence2: {}>\n<Sentence3: {}>\n<Score: {}>" % (self.first, self.second, self.thrid, self.rank_score)
         else:
             return "Wrong answer!"
 

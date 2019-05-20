@@ -1,6 +1,7 @@
 from django.shortcuts import *
 from django.http import *
 from .models import *
+from .forms import *
 from django.template import *
 from datetime import datetime
 
