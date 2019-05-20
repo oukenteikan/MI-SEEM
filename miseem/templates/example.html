@@ -17,6 +17,7 @@
     <form action={% url 'miseem:example' current %} method="post" class="panel panel-default">
         <div class="panel-body">
             {% csrf_token %}
+            {{ form.chosen_id }}
             {{ form.as_p }}
             <input type="submit" value="Submit">
         </div>

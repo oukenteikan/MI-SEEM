@@ -4,12 +4,10 @@ from .models import *
 from random import randint, sample
 
 class PointWise(Form):
-    
     total_num = Sentence.objects.count()-1
     chosen_id = randint(0, total_num)
     chosen_sentence = Sentence.objects.all()[chosen_id]
     chosen_question = chosen_sentence.belong_to_question
-
     chosen_sentence_pk = IntegerField(widget = HiddenInput(), initial=chosen_sentence.pk, disabled = True)
     description = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_question.description, disabled = True)
     standard = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_question.standard, disabled = True)
