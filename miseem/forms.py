@@ -11,9 +11,9 @@ class PointWise(Form):
     chosen_question = chosen_sentence.belong_to_question
 
     chosen_sentence_pk = IntegerField(widget = HiddenInput(), initial=chosen_sentence.pk, disabled = True)
-    description = CharField(initial=chosen_question.description, disabled = True)
-    standard = CharField(initial=chosen_question.standard, disabled = True)
-    sentence = CharField(initial=chosen_sentence, disabled = True)
+    description = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_question.description, disabled = True)
+    standard = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_question.standard, disabled = True)
+    sentence = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_sentence.content, disabled = True)
     score = FloatField(max_value = 10, min_value = 0)
 
 class PairWise(Form):
@@ -32,10 +32,10 @@ class PairWise(Form):
 
     chosen_sentence_pk_1 = IntegerField(widget = HiddenInput(), initial=chosen_sentence_1.pk, disabled = True)
     chosen_sentence_pk_2 = IntegerField(widget = HiddenInput(), initial=chosen_sentence_2.pk, disabled = True)
-    description = CharField(initial=chosen_question.description, disabled = True)
-    standard = CharField(initial=chosen_question.standard, disabled = True)
-    first = CharField(initial=chosen_sentence_1.content, disabled = True)
-    second = CharField(initial=chosen_sentence_2.content, disabled = True)
+    description = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_question.description, disabled = True)
+    standard = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_question.standard, disabled = True)
+    first = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_sentence_1.content, disabled = True)
+    second = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_sentence_2.content, disabled = True)
     score = ChoiceField(
         choices=((1, 'The first is better.'), (-1, 'The second is better.'), (0, 'I think it is a tie.')),
         widget=RadioSelect
@@ -60,11 +60,11 @@ class ListWise(forms.Form):
     chosen_sentence_pk_1 = IntegerField(widget = HiddenInput(), initial=chosen_sentence_1.pk, disabled = True)
     chosen_sentence_pk_2 = IntegerField(widget = HiddenInput(), initial=chosen_sentence_2.pk, disabled = True)
     chosen_sentence_pk_3 = IntegerField(widget = HiddenInput(), initial=chosen_sentence_3.pk, disabled = True)
-    description = CharField(initial=chosen_question.description, disabled = True)
-    standard = CharField(initial=chosen_question.standard, disabled = True)
-    first = CharField(initial=chosen_sentence_1.content, disabled = True)
-    second = CharField(initial=chosen_sentence_2.content, disabled = True)
-    third = CharField(initial=chosen_sentence_3.content, disabled = True)
+    description = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_question.description, disabled = True)
+    standard = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_question.standard, disabled = True)
+    first = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_sentence_1.content, disabled = True)
+    second = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_sentence_2.content, disabled = True)
+    third = CharField(widget = TextInput(attrs={'size': '128'}), initial=chosen_sentence_3.content, disabled = True)
     score = ChoiceField(
         choices=((1, 'The first is the best and the second is the worst.'), 
                 (2, 'The first is the best and the third is the worst.'),
