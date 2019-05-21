@@ -17,8 +17,6 @@ def index(request):
     return response
 
 def example(request, current):
-    #if request.COOKIES.get("visited_example"+str(current)):
-    #    return render(request, 'sorry.html')
     context = {}
     context['current'] = current
     if current == 1:
@@ -57,7 +55,7 @@ def example(request, current):
             context['chosen_description'] = chosen_question.description
             context['chosen_standard'] = chosen_question.standard            
             context['form'] = PairWise()
-        elif current == 3:
+        else:
             chosen_sentence_list = []
             total_question_num = Question.objects.count()-1
             total_system_num = System.objects.count() - 1
@@ -78,30 +76,20 @@ def example(request, current):
             context['chosen_description'] = chosen_question.description
             context['chosen_standard'] = chosen_question.standard
             context['form'] = ListWise()
-        else:
-            return render(request, 'sorry.html')
-        response = render(request, 'example.html', context)
-    elif request.method == "POST":
-        response = render(request, 'example.html', context)
-        response.set_cookie("visited_example"+str(current), True)
-    else:
+    elif request.method != "POST":
         response = render(request, 'sorry.html')
+    response = render(request, 'example.html', context)
     return response
 
 def quiz(request):
-    if request.COOKIES.get("visited_quiz"):
-        return render(request, 'sorry.html')
+    context = {}
     if request.method == "GET":
-        context = {}
         context['form'] = Quiz()
-        response = render(request, 'quiz.html', context)
     elif request.method == "POST":
-        context = {}
-        context['form'] = Quiz(request.POST)
-        response.set_cookie("visited_quiz", True)
-        response = render(request, 'quiz.html', context)
+        context['form'] = Quiz(request.POST)       
     else:
         response = render(request, 'sorry.html')
+    response = render(request, 'quiz.html', context)
     return response
 
 def entry(request):
