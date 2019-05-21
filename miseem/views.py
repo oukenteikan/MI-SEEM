@@ -17,8 +17,8 @@ def index(request):
     return response
 
 def example(request, current):
-    if request.COOKIES.get("visited_example"+str(current)):
-        return render(request, 'sorry.html')
+    #if request.COOKIES.get("visited_example"+str(current)):
+    #    return render(request, 'sorry.html')
     context = {}
     context['current'] = current
     if current == 1:
@@ -109,7 +109,15 @@ def entry(request):
     return response
 
 def task(request):
-    current = randint(1, 3)
+    MAX_ANSWER_NUM = 32
+    if request.method == "GET":
+        if Answer.objects.filter(belong_to_noter = request.user).count() > MAX_ANSWER_NUM:
+            return render(request, 'sorry.html')
+        current = randint(1, 3)
+    elif request.method == "POST":
+        current = int(request.POST['current'])
+    else:
+        return render(request, 'sorry.html')
     context = {}
     context['current'] = current
     if current == 1:
@@ -120,7 +128,7 @@ def task(request):
         context['head'] = "The 3rd type of task!"
     else:
         return render(request, 'sorry.html')
-    if request.method == "GET":
+    if request.method == "GET":  
         if current == 1:
             total_num = Sentence.objects.count()-1
             chosen_id = randint(0, total_num)
@@ -132,8 +140,6 @@ def task(request):
             context['form'] = PointWise()
         elif current == 2:
             chosen_sentence_list = []
-            total_question_num = Question.objects.count()-1
-            total_system_num = System.objects.count() - 1
             while len(chosen_sentence_list) < 2:
                 chosen_system_list = sample(list(System.objects.all()), 2)
                 chosen_system_1 = chosen_system_list[0]
@@ -148,10 +154,8 @@ def task(request):
             context['chosen_description'] = chosen_question.description
             context['chosen_standard'] = chosen_question.standard            
             context['form'] = PairWise()
-        elif current == 3:
+        else:
             chosen_sentence_list = []
-            total_question_num = Question.objects.count()-1
-            total_system_num = System.objects.count() - 1
             while len(chosen_sentence_list) < 3:
                 chosen_system_list = sample(list(System.objects.all()), 3) 
                 chosen_system_1 = chosen_system_list[0]
@@ -169,22 +173,42 @@ def task(request):
             context['chosen_description'] = chosen_question.description
             context['chosen_standard'] = chosen_question.standard
             context['form'] = ListWise()
-        else:
-            return render(request, 'sorry.html')
-        response = render(request, 'task.html', context)
-    elif request.method == "POST":
-        if current == 1:
-            context['form'] = PointWise(request.POST)
-        elif current == 2:
-            context['form'] = PairWise(request.POST)
-        elif current == 3:
-            context['form'] = ListWise(request.POST)
-        else:
-            return render(request, 'sorry.html')
-        response = render(request, 'task.html', context)
-        response.set_cookie("visited_task", True)
     else:
-        response = render(request, 'sorry.html')
+        if current == 1:
+            form = PointWise(request.POST)
+            if not form.is_valid():
+                return render(request, 'sorry.html')
+            chosen_sentence = Sentence.objects.get(pk=request.POST['1'])
+            chosen_question = chosen_sentence.belong_to_question
+            chosen_user = request.user
+            absolute_score = round(10*float(form.cleaned_data['absolute_score']))
+            answer = Answer(belong_to_noter = chosen_user, belong_to_type = current, 
+                            first = chosen_sentence, absolute_score = absolute_score)
+        elif current == 2:
+            form = PairWise(request.POST)
+            if not form.is_valid():
+                return render(request, 'sorry.html')
+            chosen_sentence_1 = Sentence.objects.get(pk=request.POST['1'])
+            chosen_sentence_2 = Sentence.objects.get(pk=request.POST['2'])
+            chosen_user = request.user
+            relative_score = int(form.cleaned_data['relative_score'])
+            answer = Answer(belong_to_noter = chosen_user, belong_to_type = current, 
+                            first = chosen_sentence_1, second = chosen_sentence_2, relative_score = relative_score)
+        else:
+            form = ListWise(request.POST)
+            if not form.is_valid():
+                return render(request, 'sorry.html')
+            chosen_sentence_1 = Sentence.objects.get(pk=request.POST['1'])
+            chosen_sentence_2 = Sentence.objects.get(pk=request.POST['2'])
+            chosen_sentence_3 = Sentence.objects.get(pk=request.POST['3'])
+            chosen_user = request.user
+            rank_score = int(form.cleaned_data['rank_score'])
+            answer = Answer(belong_to_noter = chosen_user, belong_to_type = current, 
+                            first = chosen_sentence_1, second = chosen_sentence_2, third = chosen_sentence_3, rank_score = rank_score)
+        answer.save()
+        context['finished_num'] = Answer.objects.filter(belong_to_noter = chosen_user).count()
+        context['done'] = (context['finished_num'] > MAX_ANSWER_NUM)
+    response = render(request, 'task.html', context)
     return response
 
 def sorry(request):

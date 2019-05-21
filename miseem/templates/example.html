@@ -51,9 +51,7 @@
 {% endblock url%}
 
 {% block button %}
-    {% ifequal request.method "GET" %}
-        <button type="button" class="btn btn-default" disabled>Understand and continue!</button>
-    {% else %}
+    {% ifequal request.method "POST" %}
         <button type="button" class="btn btn-default">Understand and continue!</button>
     {% endifequal %}
 {% endblock button %}

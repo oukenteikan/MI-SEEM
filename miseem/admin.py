@@ -19,5 +19,5 @@ class SentenceAdmin(admin.ModelAdmin):
 
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
-    list_display = ('belong_to_question', 'belong_to_noter', 'belong_to_type', 'time')
+    list_display = ('belong_to_noter', 'belong_to_type', 'time')
 
