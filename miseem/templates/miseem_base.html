@@ -14,7 +14,7 @@
         </div>
         <div class="row col-md-8 col-md-offset-2">
             <a href={% block url %}{% endblock url %}>
-            <button type="button" class="btn btn-default">{% block button %}{% endblock button %}</button>
+            {% block button %}{% endblock button %}
             </a>
         </div>
     </div>

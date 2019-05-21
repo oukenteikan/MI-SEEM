@@ -13,16 +13,34 @@
     </div>
 {% endblock content %}
 
+
 {% block form %}
+{% ifequal request.method "GET" %}
     <form action={% url 'miseem:example' current %} method="post" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                {{ chosen_description }}
+                <br/>
+                {{ chosen_standard }} 
+            </h3>
+        </div>
         <div class="panel-body">
             {% csrf_token %}
-            {{ form.chosen_id }}
-            {{ form.as_p }}
+            <ol class = "list-group">
+                {% for sentence in chosen_sentence %}
+                    <input type="hidden" name = {{ forloop.counter }} value = {{ sentence.0 }}>
+                    <li class = "list-group-item">{{ forloop.counter }}. {{ sentence.1 }}</li>
+                {% endfor %}
+            </ol>
+            {{ form.as_p }}  
+        </div>
+        <div class="panel-footer">
             <input type="submit" value="Submit">
         </div>
     </form>
+{% endifequal %}
 {% endblock form %}
+
 
 {% block url %}
     {% if current != 3 %}
@@ -31,4 +49,11 @@
     {% url 'miseem:quiz' %}
     {% endif %}
 {% endblock url%}
-{% block button %}Understand and continue!{% endblock button %}
+
+{% block button %}
+    {% ifequal request.method "GET" %}
+        <button type="button" class="btn btn-default" disabled>Understand and continue!</button>
+    {% else %}
+        <button type="button" class="btn btn-default">Understand and continue!</button>
+    {% endifequal %}
+{% endblock button %}

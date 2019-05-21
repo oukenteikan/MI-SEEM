@@ -24,4 +24,6 @@
 {% endblock content %}
 
 {% block url %}{% url 'miseem:example' 1 %}{% endblock url%}
-{% block button %}Agree and continue!{% endblock button %}
+{% block button %}
+    <button type="button" class="btn btn-default">Agree and continue</button>
+{% endblock button %}
