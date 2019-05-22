@@ -100,6 +100,7 @@ def task(request):
     MAX_ANSWER_NUM = 32
     if request.method == "GET":
         if Answer.objects.filter(belong_to_noter = request.user).count() > MAX_ANSWER_NUM:
+            print(Answer.objects.filter(belong_to_noter = request.user).count())
             return render(request, 'sorry.html')
         current = randint(1, 3)
     elif request.method == "POST":
