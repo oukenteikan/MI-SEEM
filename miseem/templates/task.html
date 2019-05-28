@@ -4,15 +4,11 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
-                Task
+		{{ head }}
             </h3>
         </div>
         <div class="panel-body">
-            <text>Here should be a label task!</text>
-            <text>Waiting to be filled!</text>
-            <text>We need a timer here!</text>
-            <text>If less than a fixed time, we jump to the sample page again!</text>
-            <text>If more than a fixed time, we jump to the last page thanks!</text>
+		{{ body }}
         </div>
     </div>
 {% endblock content %}
@@ -23,9 +19,9 @@
         {% csrf_token %}
         <div class="panel-heading">
             <h3 class="panel-title">
-                {{ chosen_description }}
+                Description: {{ chosen_description }}
                 <br/>
-                {{ chosen_standard }} 
+                Standard: {{ chosen_standard }} 
             </h3>
         </div>
         <div class="panel-body"> 

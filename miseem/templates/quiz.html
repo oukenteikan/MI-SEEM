@@ -8,7 +8,7 @@
             </h3>
         </div>
         <div class="panel-body">
-            Here should be some questions!
+            According to the intruction, consent and examples, you are supposed to answer these question so that we can make sure you are not a roboot and you are seriously annotating.
         </div>
     </div>
  
@@ -18,8 +18,15 @@
     <form action={% url 'miseem:quiz'%} method="post" class="panel panel-default">
         <div class="panel-body">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Submit">
+	    <label>How much will we pay you if you finish the whole?</label>{{form.money}}
+            <label>How many tasks you need to answer to finish the whole?</label>{{form.task}}
+	    <label>Which score is in the first kind of task?</label>{{form.score}}
+	    <label>How many sentenses are there in the third kind of task?</label>{{form.sentence}}
+	    {% ifequal request.method "POST" %}
+	        <button type="submit" class="btn btn-default" disabled>Submit</button>
+	    {% else %}
+	        <button type="submit" class="btn btn-default">Submit</button>
+	    {% endifequal%}
         </div>
     </form>
 {% endblock form %}
@@ -27,5 +34,9 @@
 {% block url %}{% url 'miseem:entry' %}{% endblock url%}
 
 {% block button %}
+{% ifequal request.method "POST" %}
     <button type="button" class="btn btn-default">Finish and continue!</button>
+{% else %}
+    <button type="button" class="btn btn-default" disabled>Finish and continue!</button>
+{% endifequal %}
 {% endblock button %}

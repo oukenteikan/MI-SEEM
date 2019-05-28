@@ -1,10 +1,12 @@
-from django.shortcuts import *
+from django.shortcuts import render, redirect
 from django.http import *
 from .models import *
 from .forms import *
 from django.template import *
 from datetime import datetime
 from django.db.models import Q
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from random import randint, sample
 
 # Create your views here.
@@ -21,10 +23,13 @@ def example(request, current):
     context['current'] = current
     if current == 1:
         context['head'] = "The 1st example!"
+        context['body'] = "This is the first kind of task. You should read the description and the standard answer of the question. Then give the absolute score for the following one sentence. the score range is from 1 to 10."
     elif current == 2:
         context['head'] = "The 2nd example!"
+        context['body'] = "This is the second kind of task. You should read the description and the standard answer of the question. Then give the relative score for the following two sentence, the result is limited to three, either one Win or Tie."
     elif current == 3:
         context['head'] = "The 3rd example!"
+        context['body'] = "This is the third kind of task. You should read the description and the standard answer of the question. Then give the rank score for the following three sentence, the result is limited to six different order of the three."
     else:
         return render(request, 'sorry.html')
     if request.method == "GET":
@@ -86,17 +91,49 @@ def quiz(request):
     if request.method == "GET":
         context['form'] = Quiz()
     elif request.method == "POST":
-        context['form'] = Quiz(request.POST)       
+        context['form'] = Quiz(request.POST)
+        if context['form'].is_valid():
+            print(context['form'].cleaned_data)
+            money = context['form'].cleaned_data['money']
+            task = context['form'].cleaned_data['task']
+            score = context['form'].cleaned_data['score']
+            sentence = context['form'].cleaned_data['sentence']
+            if money != str(1) or task != str(1) or score != str(0) or sentence != str(1):
+                return render(request, 'sorry.html')
+        else:
+            return render(request, 'sorry.html')
     else:
-        response = render(request, 'sorry.html')
+        return render(request, 'sorry.html')
     response = render(request, 'quiz.html', context)
     return response
 
 def entry(request):
-    response = render(request, 'entry.html')
+    context = {}
+    if request.method == "GET":
+        if request.user.is_authenticated:
+            response = render(request, 'sorry.html')
+        else:
+            response = render(request, 'entry.html', context)
+    elif request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        print(username, password)
+        user = authenticate(request, username=username, password=password)
+        print(user)
+        if user is not None:
+            login(request, user)
+        else:
+            if User.objects.filter(username=username).first() != None:
+                return render(request, 'sorry.html')
+            user = User.objects.create_user(username=username, password=password)
+        response = render(request, 'entry.html', context)
+    else:
+        response = render(request, 'sorry.html')
     return response
 
 def task(request):
+    if not request.user.is_authenticated:
+        return render(request, 'sorry.html')
     MAX_ANSWER_NUM = 32
     if request.method == "GET":
         if Answer.objects.filter(belong_to_noter = request.user).count() > MAX_ANSWER_NUM:
@@ -110,11 +147,14 @@ def task(request):
     context = {}
     context['current'] = current
     if current == 1:
-        context['head'] = "The 1st type of task!"
+        context['head'] = "The 1st kind of task!"
+        context['body'] = "This is the first kind of task. You should read the description and the standard answer of the question. Then give the absolute score for the following one sentence. the score range is from 1 to 10."
     elif current == 2:
-        context['head'] = "The 2nd type of task!"
+        context['head'] = "The 2nd kind of task!"
+        context['body'] = "This is the second kind of task. You should read the description and the standard answer of the question. Then give the relative score for the following two sentence, the result is limited to three, either one Win or Tie."
     elif current == 3:
-        context['head'] = "The 3rd type of task!"
+        context['head'] = "The 3rd kind of task!"
+        context['body'] = "This is the third kind of task. You should read the description and the standard answer of the question. Then give the rank score for the following three sentence, the result is limited to six different order of the three." 
     else:
         return render(request, 'sorry.html')
     if request.method == "GET":  
@@ -170,7 +210,7 @@ def task(request):
             chosen_sentence = Sentence.objects.get(pk=request.POST['1'])
             chosen_question = chosen_sentence.belong_to_question
             chosen_user = request.user
-            absolute_score = round(10*float(form.cleaned_data['absolute_score']))
+            absolute_score = int(form.cleaned_data['absolute_score'])
             answer = Answer(belong_to_noter = chosen_user, belong_to_type = current, 
                             first = chosen_sentence, absolute_score = absolute_score)
         elif current == 2:

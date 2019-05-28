@@ -34,7 +34,7 @@ class Answer(models.Model):
     first = models.ForeignKey('Sentence', related_name = 'first_sentence', on_delete = models.CASCADE)
     second = models.ForeignKey('Sentence', related_name = 'second_sentence', on_delete = models.CASCADE, null = True)
     third = models.ForeignKey('Sentence', related_name = 'third_sentence', on_delete = models.CASCADE, null = True)
-    absolute_score = models.IntegerField(choices = set((i, str(i/10)) for i in range(1, 101)), null = True)
+    absolute_score = models.IntegerField(choices = set((i, str(i)) for i in range(1, 11)), null = True)
     relative_score = models.IntegerField(choices = ((1, 'Win'), (0, 'Tie'), (-1, 'Lose')), null = True)
     rank_score = models.IntegerField(choices = ((1, '132'), (2, '123'), (3, '231'), (4, '213'), (5, '321'), (6, '312')), null = True)
 

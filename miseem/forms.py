@@ -1,7 +1,7 @@
 from django.forms import *
 
 class PointWise(Form):
-    absolute_score = FloatField(max_value = 10, min_value = 0)
+    absolute_score = IntegerField(max_value = 10, min_value = 0)
 
 class PairWise(Form):
     relative_score = ChoiceField(
@@ -21,7 +21,19 @@ class ListWise(Form):
     )
 
 class Quiz(Form):
-    score = ChoiceField(
-        choices=((1, 'The first is better.'), (-1, 'The second is better.'), (0, 'I think it is a tie.')),
+    money = ChoiceField(
+        choices=((0, '$0.5'), (1, '$0.64'), (2, '$1')),
         widget=RadioSelect
     )
+    task = ChoiceField(
+        choices=((0, '20'), (1, '32'), (2, '48')),
+        widget=RadioSelect
+    )
+    score = ChoiceField(
+        choices=((0, 'absolute score'), (1, 'relative score'), (2, 'rank score')),
+        widget=RadioSelect
+    )
+    sentence = ChoiceField(
+        choices=((0, '2'), (1, '3'), (2, '4')),
+        widget=RadioSelect
+    )    
